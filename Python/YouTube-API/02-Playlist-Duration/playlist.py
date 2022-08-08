@@ -25,10 +25,7 @@ while True:
 
     pl_response = pl_request.execute()
 
-    vid_ids = []
-    for item in pl_response['items']:
-        vid_ids.append(item['contentDetails']['videoId'])
-
+    vid_ids = [item['contentDetails']['videoId'] for item in pl_response['items']]
     vid_request = youtube.videos().list(
         part="contentDetails",
         id=','.join(vid_ids)
@@ -43,9 +40,9 @@ while True:
         minutes = minutes_pattern.search(duration)
         seconds = seconds_pattern.search(duration)
 
-        hours = int(hours.group(1)) if hours else 0
-        minutes = int(minutes.group(1)) if minutes else 0
-        seconds = int(seconds.group(1)) if seconds else 0
+        hours = int(hours[1]) if hours else 0
+        minutes = int(minutes[1]) if minutes else 0
+        seconds = int(seconds[1]) if seconds else 0
 
         video_seconds = timedelta(
             hours=hours,
