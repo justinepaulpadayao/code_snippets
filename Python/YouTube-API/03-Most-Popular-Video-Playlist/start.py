@@ -20,10 +20,7 @@ while True:
 
     pl_response = pl_request.execute()
 
-    vid_ids = []
-    for item in pl_response['items']:
-        vid_ids.append(item['contentDetails']['videoId'])
-
+    vid_ids = [item['contentDetails']['videoId'] for item in pl_response['items']]
     vid_request = youtube.videos().list(
         part="statistics",
         id=','.join(vid_ids)
